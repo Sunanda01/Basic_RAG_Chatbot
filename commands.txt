@@ -1,0 +1,13 @@
+py -m venv venv
+venv/Scripts/activate
+pip install -r requirements.txt
+
+# Run file
+1. Run injest.py 
+2. Run home.py
+
+# Ollama 
+ollama pull llama3.2
+ollama run llama3.2
+ollama run embeddinggemma "Hello World"
+ollama pull nomic-embed-text
