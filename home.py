@@ -5,10 +5,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from operator import itemgetter
 import streamlit as st
+import time
 
 # Title
 st.set_page_config(page_title="RAG Chatbot",page_icon="🤖")
-
+st.title("🤖 RAG CHATBOT ASSISTANT")
 if "chat_history" not in st.session_state:
     st.session_state.chat_history=[("ai","Hello 👋, How may I assist you!")]
 
@@ -19,18 +20,25 @@ embedding=OllamaEmbeddings(
 )
 
 # Load Vector Db
-vector_store=Chroma(
-    persist_directory="chroma_db",
-    embedding_function=embedding
+@st.cache_resource
+def load_vector_db():
+    return Chroma(
+        persist_directory="chroma_db",
+        embedding_function=embedding
+    )
+vector_store=load_vector_db()
+retriever=vector_store.as_retriever(
+    search_type="mmr",              #Maximal Marginal Relevance
+    search_kwargs={"k":3}
 )
-
-retriever=vector_store.as_retriever(search_kwargs={"k":3})
 
 # LLM Model
 llm=ChatOllama(
     model="llama3.2",
     base_url="http://localhost:11434",
-    temperature=0.1
+    temperature=0.1,
+    num_predict=300,
+    streaming=True
 )
 
 # Prompt for final answer
@@ -67,15 +75,22 @@ user_input=st.chat_input("Ask Something...")
 if user_input:
     with st.chat_message("user"):
         st.write(user_input)
-
-    response=rag_chain.invoke({
-        "question":user_input,
-        "chat_history":[]
-    })
-
+    start_time=time.time()
+    with st.spinner("Searching documents..... 🤔"):
+        response=rag_chain.invoke({
+            "question":user_input,
+            "chat_history":[]
+        })
+    end_time=time.time()
+    total_time=end_time-start_time
     # Show bot message
     with st.chat_message("Assistant"):
-        st.write(response)
+        placeholder=st.empty()
+        full_text=""
+        for chunk in response:
+            full_text+=chunk
+            placeholder.markdown(full_text)
+        st.write(f"Time Taken : {total_time:.2f} seconds")
 
     # Update Memory
     st.session_state.chat_history.append(("human",user_input))

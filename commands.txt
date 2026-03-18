@@ -3,8 +3,8 @@ venv/Scripts/activate
 pip install -r requirements.txt
 
 # Run file
-1. Run injest.py 
-2. Run home.py
+1. Run injest.py = py injest.py
+2. Run home.py = streamlit run home.py
 
 # Ollama 
 ollama pull llama3.2
