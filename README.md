@@ -81,6 +81,12 @@ Chatbot will respond using retrieved context
 
 ---
 
+## UI
+
+<img width="953" height="722" alt="Screenshot 2026-03-19 010553" src="https://github.com/user-attachments/assets/e9637531-347a-4cbd-8b2e-b9a923524d1e" />
+
+---
+
 ## 📸 Demo
 [chatbot-demo.webm](https://github.com/user-attachments/assets/e78f6535-9458-4267-9a98-2cd8c0819963)
 
