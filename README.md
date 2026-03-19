@@ -1,4 +1,4 @@
-# 🤖 Basic RAG Chatbot
+<img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/50ad0b7b-803b-481a-86be-07e69d39d028" /># 🤖 Basic RAG Chatbot
 
 A simple **Retrieval-Augmented Generation (RAG) Chatbot** built using LangChain, Ollama, ChromaDB, and Streamlit.
 
@@ -67,7 +67,11 @@ ollama pull nomic-embed-text
 
 ### 5. Run the application
 ```bash
-streamlit run app.py
+# Document Injestion 
+python injest.py
+
+# Run UI
+streamlit run home.py
 ```
 
 ---
@@ -81,7 +85,7 @@ Chatbot will respond using retrieved context
 
 ---
 
-## UI
+## 🤖 UI
 
 <img width="953" height="722" alt="Screenshot 2026-03-19 010553" src="https://github.com/user-attachments/assets/e9637531-347a-4cbd-8b2e-b9a923524d1e" />
 
